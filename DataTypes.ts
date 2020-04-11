@@ -62,3 +62,4 @@ let size: number = (<string>valor).length;
 // nada = null;
 // let num:number =null;
 
+export const PI =1.1416;
