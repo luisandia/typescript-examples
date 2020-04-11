@@ -6,13 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Hola Mundo <small>saludos</small></h1>
+    <p>
+      Este es un texto
+    </p>
+    <button type="button" id="botAlerta">Click aquí</button>
+ 
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
     <script src="node_modules/systemjs/dist/system.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
     <!-- <script src="app.js"></script> -->
-    <script> var exports = {}; </script>
 
 <script>
-    System.import('./main.js');
+System.defaultJSExtensions=true;
+System.import('./main.js');
 </script>
 </body>
 </html>

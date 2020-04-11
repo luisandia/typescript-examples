@@ -18,8 +18,13 @@
   },
   "homepage": "https://github.com/luisandia/typescript-examples#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "lite-server": "^2.5.4",
+    "jquery": "^3.5.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.10.10",
     "systemjs": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.34",
+    "lite-server": "^2.5.4"
   }
 }

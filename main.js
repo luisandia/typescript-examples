@@ -10,6 +10,12 @@ System.register(["./DataTypes.js"], function (exports_1, context_1) {
         ],
         execute: function () {
             console.log(DataTypes_js_1.PI);
+            $(document).ready(function () {
+                console.log("Hello");
+            });
+            $("#botAlerta").on("click", function () {
+                Swal.fire('Any fool can use a computer');
+            });
         }
     };
 });

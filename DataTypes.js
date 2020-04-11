@@ -50,7 +50,7 @@ System.register([], function (exports_1, context_1) {
             // let nada: undefined = undefined;
             // nada = null;
             // let num:number =null;
-            exports_1("PI", PI = 1.1416);
+            exports_1("PI", PI = 1.14156);
         }
     };
 });
