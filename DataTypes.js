@@ -1,3 +1,4 @@
+"use strict";
 // BOOLEAN
 var esSuperman = true;
 var esBatman;
@@ -47,6 +48,6 @@ var valor = "cualquier cosa";
 var size = valor.length;
 // undefined and null,By default null and undefined are subtypes of all other types. That
 //means you can assign null and undefined to something like number.
-var nada = undefined;
-nada = null;
-var num = null;
+// let nada: undefined = undefined;
+// nada = null;
+// let num:number =null;

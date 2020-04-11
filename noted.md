@@ -1,8 +1,11 @@
 monitorear cambios archivo
 tsc app.ts --watch
 
+Watch wall changes
+tsc *.ts -W
+
 iniciar proyecto
 tsc -init
 
-Watch wall changes
-tsc *.ts -W
+Run with configuration file tsconfig.json
+tsc  -p .  -W

@@ -1,3 +1,4 @@
+"use strict";
 var hero;
 function imprime_heroe() {
     return hero;

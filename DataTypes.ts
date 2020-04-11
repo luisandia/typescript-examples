@@ -58,10 +58,7 @@ let size: number = (<string>valor).length;
 
 // undefined and null,By default null and undefined are subtypes of all other types. That
 //means you can assign null and undefined to something like number.
-let nada: undefined = undefined;
-nada = null;
-
-let num:number =null;
-
-
+// let nada: undefined = undefined;
+// nada = null;
+// let num:number =null;
 
