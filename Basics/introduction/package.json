@@ -5,7 +5,8 @@
   "main": "Classes.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "lite-server"
+    "dev": "lite-server",
+    "tsc": "tsc  -build  ./tsconfig.json  *.ts -W"
   },
   "repository": {
     "type": "git",
