@@ -27,7 +27,7 @@ var starShip = {
         enable: true,
     },
 };
-function hello(a) {
+function myHelloFunc(a) {
     return {
         b: "a",
         c: 1,
@@ -66,6 +66,7 @@ var Profile = /** @class */ (function () {
 }());
 var myProfile = new Profile();
 myProfile.myUser = new DeletableCar("hh");
+// use this of MyObjectThis interface
 var myObject = {
     sayHello: function () {
         return this.helloWorld();
