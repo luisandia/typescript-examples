@@ -6,6 +6,7 @@ import { ApolloClient } from 'apollo-client';
 import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { NextPageContext, NextPage } from 'next';
 import createApolloClient from '../apolloClient';
+import { Props, InitialProps } from '../pages/interfaces';
 
 interface NextPageContextWithApollo extends NextPageContext {
   apolloClient: ApolloClient<any> | undefined;
@@ -92,7 +93,10 @@ export const initOnContext = (ctx: NextPageContextApp): NextPageContextApp => {
  * @param  {Boolean} [withApolloOptions.ssr=false]
  * @returns {(PageComponent: ReactNode) => ReactNode}
  */
-export const withApollo = ({ ssr = false } = {}) => (PageComponent: NextPage): ReactNode => {
+// export const withApollo = (PageComponent: NextPage<Props, InitialProps>, { ssr = true } = {}): ReactNode => {
+
+// export const withApollo = ({ ssr = false } = {}) => (PageComponent: NextPage<Props, InitialProps>, { ssr = true } = {}): ReactNode => {
+  export const withApollo = (PageComponent: NextPage<Props, InitialProps>, { ssr = true } = {}): ReactNode => {
   const WithApollo = ({
     apolloClient,
     apolloState,
@@ -113,7 +117,9 @@ export const withApollo = ({ ssr = false } = {}) => (PageComponent: NextPage): R
     return (
       <ApolloProvider client={client}>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <PageComponent {...pageProps} />
+        <PageComponent {...(pageProps as Props)} />
+
+        {/* <PageComponent {...pageProps} /> */}
       </ApolloProvider>
     );
   };
