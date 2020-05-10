@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useContext } from "react";
+import Link from "next/link";
 import {
   Task,
   useDeleteTaskMutation,
@@ -7,9 +7,11 @@ import {
   TasksQueryVariables,
   TasksDocument,
   TaskStatus,
-  useChangeStatusMutation
-} from '../generated/graphql';
-import { TaskFilterContext } from '../pages/[status]';
+  useChangeStatusMutation,
+  DeleteTaskMutation,
+} from "../generated/graphql";
+import { TaskFilterContext } from "../pages/[status]";
+import { MutationUpdaterFn } from "apollo-client";
 
 interface Props {
   task: Task;
@@ -17,25 +19,29 @@ interface Props {
 
 const TaskListItem: React.FC<Props> = ({ task }) => {
   const { status } = useContext(TaskFilterContext);
-  const [deleteTask, { loading, error }] = useDeleteTaskMutation({
-    update: (cache, result) => {
-      const data = cache.readQuery<TasksQuery, TasksQueryVariables>({
-        query: TasksDocument,
-        variables: { status }
-      });
 
-      if (data) {
-        cache.writeQuery<TasksQuery, TasksQueryVariables>({
-          query: TasksDocument,
-          variables: { status },
-          data: {
-            tasks: data.tasks.filter(
-              ({ id }) => id !== result.data?.deleteTask?.id
-            )
-          }
-        });
-      }
+  const updateCache = (): MutationUpdaterFn<DeleteTaskMutation> => (
+    cache,
+    result
+  ) => {
+    const data = cache.readQuery<TasksQuery, TasksQueryVariables>({
+      query: TasksDocument,
+      variables: { status },
+    });
+    if (data) {
+      cache.writeQuery<TasksQuery, TasksQueryVariables>({
+        query: TasksDocument,
+        variables: { status },
+        data: {
+          tasks: data.tasks.filter(
+            ({ id }) => id !== result.data?.deleteTask?.id
+          ),
+        },
+      });
     }
+  };
+  const [deleteTask, { loading, error }] = useDeleteTaskMutation({
+    update: updateCache(),
   });
 
   const handleDeleteClick = () => {
@@ -44,7 +50,7 @@ const TaskListItem: React.FC<Props> = ({ task }) => {
 
   const [
     changeStatus,
-    { loading: changingStatus, error: changeStatusError }
+    { loading: changingStatus, error: changeStatusError },
   ] = useChangeStatusMutation();
 
   const handleChangeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,11 +63,11 @@ const TaskListItem: React.FC<Props> = ({ task }) => {
 
   useEffect(() => {
     if (error) {
-      alert('An error occurred.');
+      alert("An error occurred.");
     }
 
     if (changeStatusError) {
-      alert('Could not change the task status.');
+      alert("Could not change the task status.");
     }
   }, [error, changeStatusError]);
 

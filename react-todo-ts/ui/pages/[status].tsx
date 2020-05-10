@@ -23,7 +23,7 @@ const IndexPage: NextPage<Props, InitialProps> = ({ ssr }) => {
       : undefined;
   const { loading, error, data, refetch } = useTasksQuery({
     variables: { status },
-    fetchPolicy: ssr ? "cache-first" : "cache-and-network",
+    fetchPolicy: ssr ? "cache-first" : "cache-and-network", // to prevent double query(one for side server and other for client side)
   });
 
   const tasks = data?.tasks;
@@ -51,7 +51,7 @@ const IndexPage: NextPage<Props, InitialProps> = ({ ssr }) => {
 
 IndexPage.getInitialProps = async (ctx) => {
   return {
-    ssr: !!ctx.req,
+    ssr: !!ctx.req,  // req only exist on the server(to prevent double query)
   };
 };
 
