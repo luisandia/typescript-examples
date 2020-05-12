@@ -45,7 +45,7 @@ async function bootstrap() {
         // add all typescript resolvers
         // __dirname + '/resolvers/*.ts'
         resolvers: [PlaceResolver],
-        // validate: true,
+        validate: true,
         // automatically create `schema.gql` file with schema definition in current folder
         emitSchemaFile: path.resolve(__dirname, "schema.gql"),
       });
