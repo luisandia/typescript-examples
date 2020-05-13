@@ -1,7 +1,19 @@
 import * as React from "react";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { Place } from "../../graphql";
+interface Props extends Place{
 
-const CardView = ({ title, description, imageUrl, onPress, user }) => (
+  onPress:() => void;
+  user:any
+}
+
+const CardView: React.FC<Props> = ({
+  title,
+  description,
+  imageUrl,
+  onPress,
+  user,
+}) => (
   <Card onPress={() => onPress && onPress()}>
     {!!user && (
       <Card.Title
