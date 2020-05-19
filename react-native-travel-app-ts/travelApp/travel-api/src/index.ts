@@ -6,7 +6,7 @@ import connectSqlite3 from "connect-sqlite3";
 import { ApolloServer } from "apollo-server-express";
 import * as path from "path";
 import { buildSchema } from "type-graphql";
-
+import { AuthResolver } from './resolvers/AuthResolver';
 import { PlaceResolver } from "./resolvers/PlaceResolver";
 
 const SQLiteStore = connectSqlite3(session);
@@ -44,7 +44,7 @@ async function bootstrap() {
       const schema = await buildSchema({
         // add all typescript resolvers
         // __dirname + '/resolvers/*.ts'
-        resolvers: [PlaceResolver],
+        resolvers: [PlaceResolver, AuthResolver],
         validate: true,
         // automatically create `schema.gql` file with schema definition in current folder
         emitSchemaFile: path.resolve(__dirname, "schema.gql"),
