@@ -21,8 +21,10 @@ type FieldError {
 
 type Mutation {
   createPlace(place: PlaceInput!): Place!
+  deletePlace(id: Float!): String!
   login(input: AuthInput!): UserResponse!
   register(input: AuthInput!): UserResponse!
+  updatePlace(place: PlaceInput!): Place!
 }
 
 """Destination or place of interest"""
@@ -36,6 +38,7 @@ type Place {
   """The place image url"""
   imageUrl: String
   title: String!
+  user: User
 }
 
 input PlaceInput {
@@ -49,13 +52,14 @@ type Query {
   currentUser: User!
   place(id: Float!): Place
 
-  """Get all the places from around the world """
+  """Get all places from around the world"""
   places: [Place!]!
 }
 
 type User {
   email: String!
   id: Float!
+  places: [Place!]!
   username: String!
 }
 
