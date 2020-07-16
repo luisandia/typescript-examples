@@ -62,7 +62,7 @@ export function DrawerContent(props: any) {
               </View>
             </View>
           </View>
-          <Drawer.Section style={styles.drawerSection}>
+          <Drawer.Section accessibilityStates style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
@@ -93,12 +93,12 @@ export function DrawerContent(props: any) {
               onPress={() => {}}
             />
           </Drawer.Section>
-          <Drawer.Section title="Preferences">
-            <TouchableRipple onPress={props.toggleTheme}>
+          <Drawer.Section accessibilityStates title="Preferences">
+            <TouchableRipple accessibilityStates onPress={props.toggleTheme}>
               <View style={styles.preference}>
-                <Text>Dark Theme</Text>
+                <Text accessibilityStates>Dark Theme</Text>
                 <View pointerEvents="none">
-                  <Switch value={paperTheme.dark} />
+                  <Switch accessibilityStates value={paperTheme.dark} />
                 </View>
               </View>
             </TouchableRipple>

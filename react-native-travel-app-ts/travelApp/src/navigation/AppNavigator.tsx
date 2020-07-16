@@ -1,13 +1,13 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
-  createDrawerNavigator,
-} from "@react-navigation/drawer";
-import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
+import React from "react";
 import { useTheme } from "react-native-paper";
 import { DrawerContent } from "./DrawerContent";
-import { Places } from "../screens";
-// import { MainTabNavigator } from './MainTabNavigator';
+import { MainTabNavigator } from "./MainTabNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,11 +18,11 @@ const AppNavigator = (navProps: any) => {
   return (
     <NavigationContainer theme={navigationTheme}>
       <Drawer.Navigator
-        drawerContent={(props) => (
+        drawerContent={(props: any) => (
           <DrawerContent {...props} toggleTheme={navProps.toggleTheme} />
         )}
       >
-        <Drawer.Screen name="Home" component={Places} />
+        <Drawer.Screen name="Home" component={MainTabNavigator} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

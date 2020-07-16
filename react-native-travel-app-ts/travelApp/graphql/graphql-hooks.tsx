@@ -18,14 +18,23 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
+  currentUser: User;
   place?: Maybe<Place>;
-  /** Get all the places from around the world  */
+  /** Get all places from around the world */
   places: Array<Place>;
 };
 
 
 export type QueryPlaceArgs = {
   id: Scalars['Float'];
+};
+
+export type User = {
+   __typename?: 'User';
+  id: Scalars['Float'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  places: Array<Place>;
 };
 
 /** Destination or place of interest */
@@ -38,17 +47,61 @@ export type Place = {
   /** The place image url */
   imageUrl?: Maybe<Scalars['String']>;
   creationDate?: Maybe<Scalars['DateTime']>;
+  user?: Maybe<User>;
 };
 
 
 export type Mutation = {
    __typename?: 'Mutation';
+  register: UserResponse;
+  login: UserResponse;
   createPlace: Place;
+  updatePlace: Place;
+  deletePlace: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  input: AuthInput;
+};
+
+
+export type MutationLoginArgs = {
+  input: AuthInput;
 };
 
 
 export type MutationCreatePlaceArgs = {
   place: PlaceInput;
+};
+
+
+export type MutationUpdatePlaceArgs = {
+  place: PlaceInput;
+};
+
+
+export type MutationDeletePlaceArgs = {
+  id: Scalars['Float'];
+};
+
+export type UserResponse = {
+   __typename?: 'UserResponse';
+  user?: Maybe<User>;
+  token?: Maybe<Scalars['String']>;
+  errors?: Maybe<Array<FieldError>>;
+};
+
+export type FieldError = {
+   __typename?: 'FieldError';
+  path: Scalars['String'];
+  message: Scalars['String'];
+};
+
+export type AuthInput = {
+  email?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
 };
 
 export type PlaceInput = {
