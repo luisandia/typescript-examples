@@ -9,6 +9,7 @@ import { buildSchema } from "type-graphql";
 import { AuthResolver } from "./resolvers/AuthResolver";
 import { PlaceResolver } from "./resolvers/PlaceResolver";
 import pubSub from "./pubSub";
+import http from "http";
 
 const SQLiteStore = connectSqlite3(session);
 
@@ -66,8 +67,12 @@ async function bootstrap() {
       apolloServer.applyMiddleware({ app, cors: true });
 
       const port = process.env.PORT || 4000;
+
+      const httpServer = http.createServer(app);
+      apolloServer.installSubscriptionHandlers(httpServer);
+
       // Start the server
-      app.listen(port, () => {
+      httpServer.listen(port, () => {
         console.log(
           `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
         );
