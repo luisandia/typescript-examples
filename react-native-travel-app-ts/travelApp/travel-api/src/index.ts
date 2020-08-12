@@ -6,8 +6,9 @@ import connectSqlite3 from "connect-sqlite3";
 import { ApolloServer } from "apollo-server-express";
 import * as path from "path";
 import { buildSchema } from "type-graphql";
-import { AuthResolver } from './resolvers/AuthResolver';
+import { AuthResolver } from "./resolvers/AuthResolver";
 import { PlaceResolver } from "./resolvers/PlaceResolver";
+import pubSub from "./pubSub";
 
 const SQLiteStore = connectSqlite3(session);
 
@@ -38,7 +39,6 @@ async function bootstrap() {
   );
   createConnection({ ...dbOptions, name: "default" })
     .then(async () => {
-
       /* Initialize apollo server here */
       // build TypeGraphQL executable schema
       const schema = await buildSchema({
@@ -48,6 +48,7 @@ async function bootstrap() {
         validate: true,
         // automatically create `schema.gql` file with schema definition in current folder
         emitSchemaFile: path.resolve(__dirname, "schema.gql"),
+        pubSub,
       });
 
       // Create GraphQL server
@@ -57,6 +58,9 @@ async function bootstrap() {
         introspection: true,
         // enable GraphQL Playground
         playground: true,
+        subscriptions: {
+          keepAlive: 1000,
+        },
       });
 
       apolloServer.applyMiddleware({ app, cors: true });
@@ -64,7 +68,12 @@ async function bootstrap() {
       const port = process.env.PORT || 4000;
       // Start the server
       app.listen(port, () => {
-        console.log(`Server started at http://localhost:${port}/graphql`);
+        console.log(
+          `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+        );
+        console.log(
+          `🚀 Subscriptions ready at ws://localhost:${port}${apolloServer.subscriptionsPath}`
+        );
       });
     })
     .catch((error) => console.log(error));

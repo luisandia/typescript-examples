@@ -8,6 +8,13 @@ import { getUserId } from "../utils";
 import { Request } from "express";
 import { User } from "../entity/User";
 
+import { PubSub, Subscription, Root, Publisher } from "type-graphql";
+// import { PubSubEngine } from "graphql-subscriptions";
+
+enum Topic {
+  PlaceAdded = "NEW_PLACE_ADDED",
+}
+
 @Resolver(() => Place)
 export class PlaceResolver {
   // @Query assume certain properties on a given class or function
@@ -27,7 +34,8 @@ export class PlaceResolver {
   @Mutation(() => Place)
   async createPlace(
     @Arg("place") placeInput: PlaceInput,
-    @Ctx() ctx: { req: Request }
+    @Ctx() ctx: { req: Request },
+    @PubSub(Topic.PlaceAdded) publish: Publisher<Place>
   ): Promise<Place> {
     const userId = getUserId(ctx);
     if (userId) {
@@ -42,6 +50,7 @@ export class PlaceResolver {
         ...place,
         user,
       }).save();
+      await publish(newPlace);
       return newPlace;
     }
     throw new Error("User not found");
@@ -85,5 +94,12 @@ export class PlaceResolver {
       throw new Error("Place not deleted");
     }
     throw new Error("User not found");
+  }
+
+  @Subscription(() => Place, {
+    topics: Topic.PlaceAdded,
+  })
+  newPlaceAdded(@Root() place: Place): Place {
+    return place;
   }
 }

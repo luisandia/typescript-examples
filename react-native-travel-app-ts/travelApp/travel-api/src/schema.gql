@@ -56,6 +56,10 @@ type Query {
   places: [Place!]!
 }
 
+type Subscription {
+  newPlaceAdded: Place!
+}
+
 type User {
   email: String!
   id: Float!
