@@ -19,7 +19,7 @@ const Places: React.FC<Props> = ({ navigation }) => {
             onPress={() => {
               createPlace({
                 variables: {
-                  title: `Place #${data!.places.length + 1}`,
+                  title: `Place #${data && data.places.length + 1}`,
                   description: "",
                   imageUrl: "",
                 },

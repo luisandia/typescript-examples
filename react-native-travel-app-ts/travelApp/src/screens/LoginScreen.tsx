@@ -22,6 +22,7 @@ export default function LoginScreen(props) {
   // Signing Up
   const [signUpMutation] = useSignUpMutation({
     async onCompleted({ register }) {
+      console.log("HORROR")
       const { token } = register;
       if (token) {
         try {
