@@ -142,6 +142,16 @@ export type CurrentUserQuery = (
   ) }
 );
 
+export type DeletePlaceMutationVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type DeletePlaceMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deletePlace'>
+);
+
 export type SignInMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -204,6 +214,22 @@ export type SignUpMutation = (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username' | 'email'>
     )> }
+  ) }
+);
+
+export type UpdatePlaceMutationVariables = Exact<{
+  id: Scalars['Float'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  imageUrl: Scalars['String'];
+}>;
+
+
+export type UpdatePlaceMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePlace: (
+    { __typename?: 'Place' }
+    & Pick<Place, 'id' | 'title' | 'description' | 'imageUrl' | 'creationDate'>
   ) }
 );
 
@@ -298,6 +324,42 @@ export function useCurrentUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
 export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
 export type CurrentUserQueryResult = ApolloReactCommon.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const DeletePlaceDocument = gql`
+    mutation DeletePlace($id: Float!) {
+  deletePlace(id: $id)
+}
+    `;
+export type DeletePlaceMutationFn = ApolloReactCommon.MutationFunction<DeletePlaceMutation, DeletePlaceMutationVariables>;
+export type DeletePlaceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeletePlaceMutation, DeletePlaceMutationVariables>, 'mutation'>;
+
+    export const DeletePlaceComponent = (props: DeletePlaceComponentProps) => (
+      <ApolloReactComponents.Mutation<DeletePlaceMutation, DeletePlaceMutationVariables> mutation={DeletePlaceDocument} {...props} />
+    );
+    
+
+/**
+ * __useDeletePlaceMutation__
+ *
+ * To run a mutation, you first call `useDeletePlaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlaceMutation, { data, loading, error }] = useDeletePlaceMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePlaceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeletePlaceMutation, DeletePlaceMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeletePlaceMutation, DeletePlaceMutationVariables>(DeletePlaceDocument, baseOptions);
+      }
+export type DeletePlaceMutationHookResult = ReturnType<typeof useDeletePlaceMutation>;
+export type DeletePlaceMutationResult = ApolloReactCommon.MutationResult<DeletePlaceMutation>;
+export type DeletePlaceMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePlaceMutation, DeletePlaceMutationVariables>;
 export const SignInDocument = gql`
     mutation SignIn($username: String!, $password: String!) {
   login(input: {username: $username, password: $password}) {
@@ -476,3 +538,48 @@ export function useSignUpMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = ApolloReactCommon.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const UpdatePlaceDocument = gql`
+    mutation UpdatePlace($id: Float!, $title: String!, $description: String!, $imageUrl: String!) {
+  updatePlace(place: {id: $id, title: $title, description: $description, imageUrl: $imageUrl}) {
+    id
+    title
+    description
+    imageUrl
+    creationDate
+  }
+}
+    `;
+export type UpdatePlaceMutationFn = ApolloReactCommon.MutationFunction<UpdatePlaceMutation, UpdatePlaceMutationVariables>;
+export type UpdatePlaceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdatePlaceMutation, UpdatePlaceMutationVariables>, 'mutation'>;
+
+    export const UpdatePlaceComponent = (props: UpdatePlaceComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdatePlaceMutation, UpdatePlaceMutationVariables> mutation={UpdatePlaceDocument} {...props} />
+    );
+    
+
+/**
+ * __useUpdatePlaceMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlaceMutation, { data, loading, error }] = useUpdatePlaceMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      imageUrl: // value for 'imageUrl'
+ *   },
+ * });
+ */
+export function useUpdatePlaceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdatePlaceMutation, UpdatePlaceMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdatePlaceMutation, UpdatePlaceMutationVariables>(UpdatePlaceDocument, baseOptions);
+      }
+export type UpdatePlaceMutationHookResult = ReturnType<typeof useUpdatePlaceMutation>;
+export type UpdatePlaceMutationResult = ApolloReactCommon.MutationResult<UpdatePlaceMutation>;
+export type UpdatePlaceMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdatePlaceMutation, UpdatePlaceMutationVariables>;

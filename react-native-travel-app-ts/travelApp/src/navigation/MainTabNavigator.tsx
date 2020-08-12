@@ -5,7 +5,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { Places } from "../screens";
 import { useTheme, Portal, FAB } from "react-native-paper";
 import { useIsFocused } from "@react-navigation/native";
-import { PlaceDetail } from "../screens";
+import { PlaceDetail, AuthLoading, Login, Profile, Form } from "../screens";
 import { Header } from "./Header";
 
 const Stack = createStackNavigator();
@@ -23,13 +23,14 @@ export const PlaceStack = () => {
     >
       <Stack.Screen name="Places" component={Places} />
       <Stack.Screen name="Detail" component={PlaceDetail} />
+      <Stack.Screen name="Form" component={Form} />
     </Stack.Navigator>
   );
 };
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const MainTabNavigator = () => {
+export const MainTabNavigator = ({ navigation }) => {
   const isFocused = useIsFocused();
   const theme = useTheme();
   return (
@@ -46,13 +47,20 @@ export const MainTabNavigator = () => {
             tabBarIcon: "home-account",
           }}
         />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileStack}
+          options={{
+            tabBarIcon: "bell-outline",
+          }}
+        />
       </Tab.Navigator>
       <Portal>
         <FAB
           accessibilityStates
           visible={isFocused}
           icon="feather"
-          onPress={() => console.log("pressed FAB")}
+          onPress={() => navigation.navigate("Form", { item: {} })}
           style={{
             backgroundColor: theme.colors.background,
             position: "absolute",
@@ -62,5 +70,23 @@ export const MainTabNavigator = () => {
         />
       </Portal>
     </React.Fragment>
+  );
+};
+
+export const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Auth"
+      headerMode="screen"
+      screenOptions={{
+        header: ({ scene, previous, navigation }) => (
+          <Header scene={scene} previous={previous} navigation={navigation} />
+        ),
+      }}
+    >
+      <Stack.Screen name="Auth" component={AuthLoading} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
   );
 };
