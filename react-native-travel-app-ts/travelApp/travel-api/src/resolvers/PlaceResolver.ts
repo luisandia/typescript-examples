@@ -1,4 +1,14 @@
-import { Resolver, Query, Arg, Mutation, Ctx } from "type-graphql";
+import {
+  Resolver,
+  Query,
+  Arg,
+  Mutation,
+  Ctx,
+  PubSub,
+  Subscription,
+  Root,
+  Publisher,
+} from "type-graphql";
 import { plainToClass } from "class-transformer";
 
 import { Place } from "../entity/Place";
@@ -8,7 +18,6 @@ import { getUserId } from "../utils";
 import { Request } from "express";
 import { User } from "../entity/User";
 
-import { PubSub, Subscription, Root, Publisher } from "type-graphql";
 // import { PubSubEngine } from "graphql-subscriptions";
 
 enum Topic {

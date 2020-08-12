@@ -112,6 +112,11 @@ export type PlaceInput = {
   imageUrl?: Maybe<Scalars['String']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  newPlaceAdded: Place;
+};
+
 export type CreatePlaceMutationVariables = Exact<{
   title: Scalars['String'];
   description: Scalars['String'];
@@ -166,6 +171,21 @@ export type SignInMutation = (
     & { user?: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username' | 'email'>
+    )> }
+  ) }
+);
+
+export type NewPlaceAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewPlaceAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { newPlaceAdded: (
+    { __typename?: 'Place' }
+    & Pick<Place, 'id' | 'title' | 'description' | 'imageUrl' | 'creationDate'>
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username'>
     )> }
   ) }
 );
@@ -404,6 +424,48 @@ export function useSignInMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = ApolloReactCommon.MutationResult<SignInMutation>;
 export type SignInMutationOptions = ApolloReactCommon.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
+export const NewPlaceAddedDocument = gql`
+    subscription NewPlaceAdded {
+  newPlaceAdded {
+    id
+    title
+    description
+    imageUrl
+    creationDate
+    user {
+      id
+      username
+    }
+  }
+}
+    `;
+export type NewPlaceAddedComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<NewPlaceAddedSubscription, NewPlaceAddedSubscriptionVariables>, 'subscription'>;
+
+    export const NewPlaceAddedComponent = (props: NewPlaceAddedComponentProps) => (
+      <ApolloReactComponents.Subscription<NewPlaceAddedSubscription, NewPlaceAddedSubscriptionVariables> subscription={NewPlaceAddedDocument} {...props} />
+    );
+    
+
+/**
+ * __useNewPlaceAddedSubscription__
+ *
+ * To run a query within a React component, call `useNewPlaceAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewPlaceAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewPlaceAddedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewPlaceAddedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewPlaceAddedSubscription, NewPlaceAddedSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<NewPlaceAddedSubscription, NewPlaceAddedSubscriptionVariables>(NewPlaceAddedDocument, baseOptions);
+      }
+export type NewPlaceAddedSubscriptionHookResult = ReturnType<typeof useNewPlaceAddedSubscription>;
+export type NewPlaceAddedSubscriptionResult = ApolloReactCommon.SubscriptionResult<NewPlaceAddedSubscription>;
 export const PlaceDocument = gql`
     query Place($id: Float!) {
   place(id: $id) {
