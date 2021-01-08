@@ -1,4 +1,5 @@
-import { PI } from "./DataTypes.js";
+// import { PI } from "./1-DataTypes.js";
+const PI =1.14156;
 declare var Swal: any;
 
 console.log(PI);
